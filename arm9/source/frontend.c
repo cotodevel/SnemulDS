@@ -7,10 +7,10 @@
 #include "diskio.h"
 #include "ff.h"
 
-#include "typedefs.h"
-#include "posix_hook_shared.h"
-#include "fsfat_layer.h"
-#include "toolchain_utils.h"
+#include "typedefsTGDS.h"
+#include "posixHandleTGDS.h"
+#include "fsfatlayerTGDS.h"
+#include "utilsTGDS.h"
 
 
 
@@ -76,13 +76,13 @@ bool _readFrontend(sint8 *target){
 	
 	
 	//FIL f;
-	FILE *f=fopen_fs(getfatfsPath("loadfile.dat"),"r");
+	FILE *f=fopen(getfatfsPath("loadfile.dat"),"r");
 	//if(f_open(&f,"/loadfile.dat",FA_READ) == FR_OK){
 	if(f){
 		int i=0;
 		myfgets((sint8*)buf,768,f);
 		//myfgets((sint8*)buf,768,&f);
-		fclose_fs(f);
+		fclose(f);
 		//f_close(&f);
 		
 		fatfs_unlink(getfatfsPath("loadfile.dat"));	//unlink("/loadfile.dat");
@@ -95,7 +95,7 @@ bool _readFrontend(sint8 *target){
 		if(strlen(target)<4||(strcasecmp(target+strlen(target)-4,".smc")&&strcasecmp(target+strlen(target)-4,".sfc")))return false;
 		return true;
 	}
-	f=fopen_fs(getfatfsPath("plgargs.dat"),"r");
+	f=fopen(getfatfsPath("plgargs.dat"),"r");
 	//if(f_open(&f,"/plgargs.dat",FA_READ) == FR_OK){
 	if(f){
 		int i=0;
@@ -104,7 +104,7 @@ bool _readFrontend(sint8 *target){
 		myfgets((sint8*)buf,768,f); //second line
 		//myfgets((sint8*)buf,768,&f); //second line
 		
-		fclose_fs(f);
+		fclose(f);
 		//f_close(&f);
 		
 		fatfs_unlink(getfatfsPath("plgargs.dat"));	//unlink("/plgargs.dat");
@@ -117,18 +117,18 @@ bool _readFrontend(sint8 *target){
 		if(strlen(target)<4||(strcasecmp(target+strlen(target)-4,".smc")&&strcasecmp(target+strlen(target)-4,".sfc")))return false;
 		return true;
 	}
-	f=fopen_fs(getfatfsPath("moonshl2/extlink.dat"),"r+b");
+	f=fopen(getfatfsPath("moonshl2/extlink.dat"),"r+b");
 	//if(f_open(&f,"/moonshl2/extlink.dat",FA_READ | FA_WRITE) == FR_OK){
 	if(f){
 		TExtLinkBody extlink;
 		memset(&extlink,0,sizeof(TExtLinkBody));
 		
-		fread_fs(&extlink,1,sizeof(TExtLinkBody),f);
+		fread(&extlink,1,sizeof(TExtLinkBody),f);
 		//unsigned int read_so_far;
 		//f_read(&f, &extlink, sizeof(TExtLinkBody), &read_so_far);
 		
 		if(extlink.ID!=ExtLinkBody_ID){
-			fclose_fs(f);
+			fclose(f);
 			//f_close(&f);
 			return false;
 		}
@@ -137,15 +137,15 @@ bool _readFrontend(sint8 *target){
 		
 		ucs2tombs((uint8*)target,extlink.DataFullPathFilenameUnicode,768);
 		
-		fseek_fs(f,0,SEEK_SET);
+		fseek(f,0,SEEK_SET);
 		//f_lseek (&f, 0);
 		
-		fwrite_fs((void*)"____",1,4,f);
+		fwrite((void*)"____",1,4,f);
 		//unsigned int written;
 		//f_write(&f, "____", 4, &written);
 		//f_truncate(&f);
 		
-		fclose_fs(f);
+		fclose(f);
 		//f_close(&f);
 		
 		if(strlen(target)<4||(strcasecmp(target+strlen(target)-4,".smc")&&strcasecmp(target+strlen(target)-4,".sfc")))return false;

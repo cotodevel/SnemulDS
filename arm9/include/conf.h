@@ -22,8 +22,8 @@ USA
 #define __conf_h__
 
 #include "dsregs.h"
-#include "typedefs.h"
-#include "console.h"
+#include "typedefsTGDS.h"
+#include "consoleTGDS.h"
 #include "api_wrapper.h"
 #include "apu_jukebox.h"
 

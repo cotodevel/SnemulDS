@@ -19,16 +19,16 @@ GNU General Public License for more details.
 
 #include <string.h>
 #include "common.h"
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
-#include "console.h"
+#include "consoleTGDS.h"
 #include "gfx.h"
 #include "cfg.h"
 #include "apu.h"
 #include "opcodes.h"
 #include "core.h"
-#include "gui.h"
-#include "dma.h"
+#include "guiTGDS.h"
+#include "dmaTGDS.h"
 
 //snemulds
 __attribute__((section(".dtcm")))

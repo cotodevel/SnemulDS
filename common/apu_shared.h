@@ -4,7 +4,7 @@
 #ifndef __apu_shared_h__
 #define __apu_shared_h__
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
 #include "specific_shared.h"
 

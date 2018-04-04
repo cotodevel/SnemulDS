@@ -32,13 +32,13 @@ USA
 #include "fs.h"
 #include "memmap.h"
 #include "crc32.h"
-#include "gui.h"
+#include "guiTGDS.h"
 #include "gui_console_connector.h"
 #include "devoptab_devices.h"
 #include "dsregs_asm.h"
 #include "InterruptsARMCores_h.h"
-#include "keypad.h"
-#include "toolchain_utils.h"
+#include "keypadTGDS.h"
+#include "utilsTGDS.h"
 #include "nds_cp15_misc.h"
 
 //Preset BG Layering Config
@@ -323,7 +323,8 @@ int checkConfiguration(sint8 *name, int crc)
 	return 0;
 }
 
-
+char tmpFile[512];
+bool zipFileLoaded = false;
 //requires sint8 * name to be romname.ext
 int loadROM(sint8 *name, int confirm)
 {

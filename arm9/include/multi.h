@@ -25,7 +25,7 @@ USA
 #define __multi_wnifilib_h__
 
 #include <stdbool.h>
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 
 #endif
 

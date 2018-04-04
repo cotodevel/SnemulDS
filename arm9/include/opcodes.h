@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #define __opcodes_h__
 
 #include	"common.h"
-#include	"typedefs.h"
+#include	"typedefsTGDS.h"
 
 #define P_C  0x01
 #define P_Z  0x02

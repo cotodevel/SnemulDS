@@ -23,18 +23,18 @@ GNU General Public License for more details.
 
 #include "specific_shared.h"
 #include "devoptab_devices.h"
-#include "posix_hook_shared.h"
-#include "toolchain_utils.h"
+#include "posixHandleTGDS.h"
+#include "utilsTGDS.h"
 
 #include "fs.h"
-#include "gui.h"
+#include "guiTGDS.h"
 #include "nds_cp15_misc.h"
 
 #include <unistd.h>
 #include <sys/dir.h>
 #include <fcntl.h>
-#include "fsfat_layer.h"
-#include "file.h"
+#include "fsfatlayerTGDS.h"
+#include "fileHandleTGDS.h"
 
 #include "gfx.h"
 #include "cfg.h"
@@ -47,168 +47,24 @@ GNU General Public License for more details.
 #include "InterruptsARMCores_h.h"
 #include "specific_shared.h"
 #include "ff.h"
-#include "mem_handler_shared.h"
+#include "memoryHandleTGDS.h"
 #include "reent.h"
 #include "sys/types.h"
 #include "engine.h"
 #include "core.h"
 #include "dsregs.h"
 #include "dsregs_asm.h"
-#include "typedefs.h"
-#include "console.h"
+#include "typedefsTGDS.h"
+#include "consoleTGDS.h"
 #include "api_wrapper.h"
 #include "apu_jukebox.h"
-#include "toolchain_utils.h"
 #include "about.h"
-#include "file.h"
+#include "fileHandleTGDS.h"
 #include "xenofunzip.h"
 
 
-sint8 *_FS_getFileExtension(sint8 *filename)
-{
-	static sint8 ext[4];
-	sint8	*ptr;
-	int		i = 0;
-	
-	ptr = filename;
-	do
-	{
-		ptr = strchr(ptr, '.');
-		if (!ptr)
-			return NULL;
-		ptr++;
-	}
-	while (strlen(ptr) > 3);
-		
-	for (i = 0; i < (int)strlen(ptr); i++)
-		ext[i] = toupper((int)(ptr[i])); 
-	ext[i] = 0;
-	return ext;
-}
-
-sint8 *FS_getFileName(sint8 *filename)
-{
-	static sint8 name[100];
-	sint8	*ptr;
-	int		i;
-	
-	ptr = filename;
-	ptr = strrchr(ptr, '.');
-		
-	for (i = 0; i < ptr-filename; i++)
-		name[i] = filename[i]; 
-	name[i] = 0;
-	return name;
-}
 
 /* *********************** FAT ************************ */
-
-int		FS_chdir(const sint8 *path)
-{
-	FS_lock();
-	int ret = fatfs_chdir(path);
-	FS_unlock();
-	return ret;
-}
-
-
-sint8	**FS_getDirectoryList(sint8 *path, sint8 *mask, int *cnt)
-{	
-	int			size;
-		
-	FS_lock();	
-	DIR *dir = opendir (path); 
-	*cnt = size = 0;
-	if( NULL != dir )
-	{
-		while (1)
-		{
-			struct dirent* pent = readdir(dir);
-			if(pent == NULL){
-				break;
-			}
-			
-			struct fd * fdinst = fd_struct_get(pent->d_ino);
-			if(fdinst){
-				//OK
-			}
-			else{
-				//NULL!. This should never happen.
-				continue;
-			}
-			
-			if (!S_ISDIR(fdinst->stat.st_mode)) { 
-				continue;
-			}
-			
-			if (!strcmp(pent->d_name, ".")){
-				continue;
-			}
-			
-			if (mask)
-			{
-				sint8 *ext = _FS_getFileExtension(pent->d_name);
-				if (ext && strstr(mask, ext))
-				{
-					//filecount Increase
-					(*cnt)++;
-					size += strlen(pent->d_name)+1;
-				}
-			} 
-			else
-			{
-				//filecount Increase
-				(*cnt)++;
-				size += strlen(pent->d_name)+1;
-			}
-		}
-	}
-	rewinddir(dir);
-	
-	sint8	**list = (sint8	**)malloc((*cnt)*sizeof(sint8 *)+size);
-	sint8	*ptr = ((sint8 *)list) + (*cnt)*sizeof(sint8 *);
-	
-	int i = 0; 
-	if( NULL != dir )
-	{
-		while (1)
-		{
-			struct dirent* pent = readdir(dir);	//if NULL already not a dir
-			if(pent == NULL){
-				break;
-			}
-			
-			struct fd * fdinst = fd_struct_get(pent->d_ino);
-			if (!S_ISDIR(fdinst->stat.st_mode)) {
-				continue;
-			}
-			
-			if (!strcmp(pent->d_name, ".")){
-				continue;		
-			}
-			
-			if (mask)
-			{
-				sint8 *ext = _FS_getFileExtension(pent->d_name);
-				if (ext && strstr(mask, ext))
-				{
-					strcpy(ptr, pent->d_name);
-					list[i++] = ptr;
-					ptr += strlen(pent->d_name)+1;  
-				}
-			} else
-			{
-				strcpy(ptr, pent->d_name);
-				list[i++] = ptr;
-				ptr += strlen(pent->d_name)+1;
-			}
-		}
-	}
-	
-	closedir(dir);
-	FS_unlock();
-	return list;
-}
 
 sint8 logbuf[32000];
 static int logcnt = 0;
@@ -250,15 +106,15 @@ void	FS_printlog(sint8 *buf)
 		
 		FS_lock();
 		
-		f_log = fopen_fs(name, "w");
+		f_log = fopen(name, "w");
 		if(f_log){
 			//FILE handle ok
 		}
 		else{
 			//FILE handle error
 		}
-		fwrite_fs(logbuf, 1, strlen(logbuf), f_log);
-		fclose_fs(f_log);
+		fwrite(logbuf, 1, strlen(logbuf), f_log);
+		fclose(f_log);
 		FS_unlock();
 		
 		strcpy(logbuf, buf);
@@ -287,17 +143,17 @@ int	FS_loadROM(sint8 *ROM, sint8 *filename)
 {
 	FILE	*f;
 	FS_lock();
-	f = fopen_fs(filename, "r");
-	fseek_fs(f, 0, SEEK_END);
-	int size = ftell_fs(f);
-	fseek_fs(f, 0, SEEK_SET);
+	f = fopen(filename, "r");
+	fseek(f, 0, SEEK_END);
+	int size = ftell(f);
+	fseek(f, 0, SEEK_SET);
 
 	//Prevent Cache problems.
 	coherent_user_range_by_size((uint32)ROM, (int)size);
 	
-	fread_fs(ROM, 1, size, f);
+	fread(ROM, 1, size, f);
 	GUI_printf("Read done\n");
-	fclose_fs(f);
+	fclose(f);
 	FS_unlock();
 
 	return 1;
@@ -311,9 +167,9 @@ int	FS_loadROMForPaging(sint8 *ROM, sint8 *filename, int size)
 	FS_lock();
 	
 	if (fPaging){
-		fclose_fs(fPaging);
+		fclose(fPaging);
 	}
-	fPaging = fopen_fs(filename, "r");
+	fPaging = fopen(filename, "r");
 	sint32 fd = fileno(fPaging);
 	if(fd < 0){
 		FS_unlock();
@@ -322,7 +178,7 @@ int	FS_loadROMForPaging(sint8 *ROM, sint8 *filename, int size)
 	//Prevent Cache problems.
 	coherent_user_range_by_size((uint32)ROM, (int)size);
 	
-	int ret = fread_fs(ROM, 1, size, fPaging);
+	int ret = fread(ROM, 1, size, fPaging);
 	FS_unlock();
 	
 	if(ret != size){
@@ -345,7 +201,7 @@ int	FS_loadROMPage(sint8 *buf, unsigned int pos, int size){
 	//Prevent Cache problems.
 	coherent_user_range_by_size((uint32)buf, (int)size);
 	
-	ret = fseek_fs(fPaging, pos, SEEK_SET);
+	ret = fseek(fPaging, pos, SEEK_SET);
 	
 	if (ret < 0)
 	{
@@ -354,18 +210,10 @@ int	FS_loadROMPage(sint8 *buf, unsigned int pos, int size){
 	}
 	
 	
-	return fread_fs(buf, 1, size, fPaging);
+	return fread(buf, 1, size, fPaging);
 }
 
 int	FS_shouldFreeROM()
 {
 	return 1;
-}
-
-char * tmpFile = "TempFile.smc";
-bool zipFileLoaded;	//zip / gz support
-int load_gz(char *fname, char *newtempfname)	//fname,newtempfname must use getfatfsPath() outside!
-{
-	int ret = do_decompression_ewramstack(fname, newtempfname);	//use EWRAM as STACK
-	return ret;
 }

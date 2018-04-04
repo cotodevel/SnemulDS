@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #include "specific_shared.h"
 #include "dsregs.h"
 #include "dsregs_asm.h"
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "InterruptsARMCores_h.h"
 #include "core.h"
 #include "apu_shared.h"

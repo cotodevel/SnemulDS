@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #define __engine_snemul__
 
 #include "dsregs.h"
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 
 #endif
 

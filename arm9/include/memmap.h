@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #ifndef MEMMAP_H_
 #define MEMMAP_H_
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 
 #define NOT_LARGE	0
 #define USE_PAGING	1

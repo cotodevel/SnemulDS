@@ -26,7 +26,7 @@ GNU General Public License for more details.
 //#define IN_DTCM __attribute__((section(".dtcm")))
 //#define IN_ITCM __attribute__((section(".itcm")))
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 /*
 #ifndef TIMER_Y
 #define START_PROFILE(name, cnt) \

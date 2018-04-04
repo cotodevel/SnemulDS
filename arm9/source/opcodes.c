@@ -16,7 +16,7 @@ GNU General Public License for more details.
 */
 
 #include "common.h"
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
 #include "opcodes.h"
 #include "cfg.h"

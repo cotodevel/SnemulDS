@@ -25,7 +25,7 @@
 #include <string.h>
 
 #include "fs.h"
-#include "posix_hook_shared.h"
+#include "posixHandleTGDS.h"
 
 //stdbool.h handles these
 /*
@@ -34,7 +34,7 @@
 */
 #include <stdbool.h>
 #include "conf.h"
-#include "toolchain_utils.h"
+#include "utilsTGDS.h"
 
 CONFIG *config[MAX_CONFIGS] = { NULL, NULL, NULL, NULL };
 CONFIG *config_override = NULL;
@@ -56,7 +56,7 @@ void save_config(CONFIG *cfg)
 		 if (cfg->dirty) {
 			FS_lock();
 		    /* write changed data to disk */
-		    FILE *f = fopen_fs(cfg->filename, "w");
+		    FILE *f = fopen(cfg->filename, "w");
 			//FIL fhandler;
 			
 			//if(f_open(&fhandler,cfg->filename,FA_WRITE | FA_OPEN_ALWAYS) == FR_OK)
@@ -67,24 +67,24 @@ void save_config(CONFIG *cfg)
 		       while (pos) {
 			  	 if (pos->name) {
 			    	 
-					 fputs_fs(pos->name, f);
+					 fputs(pos->name, f);
 			     	 //f_puts(pos->name,&fhandler);
 					 
 					 if (pos->name[0] != '['){
-						fputs_fs(" = ", f);
+						fputs(" = ", f);
 						//f_puts(" = ",&fhandler);
 					 }
 			     }
 			    if (pos->data){
-			       fputs_fs(pos->data, f);
+			       fputs(pos->data, f);
 				   //f_puts(pos->data,&fhandler);
 				}
-			     fputs_fs("\n", f);
+			     fputs("\n", f);
 			     //f_puts("\n",&fhandler);
 				 
 				 pos = pos->next;
 		       }
-		       fclose_fs(f);
+		       fclose(f);
 				//f_close(&fhandler);
 			}
 		    FS_unlock();
@@ -466,7 +466,7 @@ void load_config_file(CONFIG **config, sint8 *filename, sint8 *savefile)	//requi
 	if (length > 0)
 	{
 		FS_lock();
-		FILE *f = fopen_fs(filename, "r");
+		FILE *f = fopen(filename, "r");
 		if (f)
 		{
 		//FIL fhandler;
@@ -475,7 +475,7 @@ void load_config_file(CONFIG **config, sint8 *filename, sint8 *savefile)	//requi
 			sint8 *tmp = (sint8*)malloc(length);
 			if (tmp)
 			{
-				fread_fs(tmp, 1, length, f);
+				fread(tmp, 1, length, f);
 				//unsigned int read_so_far;
 				//f_read(&fhandler, tmp, length, &read_so_far);
 				printf("Config loaded.\n");
@@ -486,7 +486,7 @@ void load_config_file(CONFIG **config, sint8 *filename, sint8 *savefile)	//requi
 				printf("Config not found.Generating...\n");
 				set_config(config, NULL, 0, savefile);
 			}
-			fclose_fs(f);
+			fclose(f);
 			//f_close(&fhandler);
 		}
 		else{

@@ -23,7 +23,7 @@ USA
 
 #include "InterruptsARMCores_h.h"
 #include "specific_shared.h"
-#include "gui.h"
+#include "guiTGDS.h"
 #include "dsregs_asm.h"
 #include "fs.h"
 #include "gfx.h"
@@ -36,7 +36,7 @@ USA
 #include "main.h"
 #include "font_8x8_uv.h"
 #include "ppu.h"
-#include "keypad.h"
+#include "keypadTGDS.h"
 #include "interrupts.h"
 
 #endif

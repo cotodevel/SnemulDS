@@ -18,7 +18,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301
 USA
 
 */
-#include "common_shared.h"
+#include "ipcfifoTGDS.h"
 #include "specific_shared.h"
 #include "apu_shared.h"
 
@@ -31,7 +31,7 @@ USA
 #include "main.h"
 #include "mixrate.h"
 #include "wifi_arm7.h"
-#include "spifw.h"
+#include "spifwTGDS.h"
 #include "apu_shared.h"
 
 #endif
@@ -62,57 +62,17 @@ __attribute__((section(".itcm")))
 void HandleFifoNotEmptyWeakRef(uint32 cmd1,uint32 cmd2,uint32 cmd3,uint32 cmd4){
 	
 	switch (cmd1) {		
-		//Shared 
-		case(WIFI_SYNC):{
-			Wifi_Sync();
-		}
-		break;
-		
-		//Process the packages (signal) that sent earlier FIFO_SEND_EXT
-		case(FIFO_SOFTFIFO_READ_EXT):{
-		
-		}
-		break;
-		
-		case(FIFO_SOFTFIFO_WRITE_EXT):{
-			SetSoftFIFO(cmd2);
-		}
-		break;
-		
 		
 		//ARM7 command handler
-		#ifdef ARM7
-		
-		//ARM7 Only
-		case(FIFO_POWERCNT_ON):{
-			powerON((uint16)cmd2);
-		}
-		break;
-		
-		case (FIFO_POWERMGMT_WRITE):{
-			PowerManagementDeviceWrite(PM_SOUND_AMP, (int)cmd2>>16);  // void * data == command2
-		}
-		break;
-		
-		//arm9 wants to send a WIFI context block address / userdata is always zero here
-		case(WIFI_STARTUP):{
-			//	wifiAddressHandler( void * address, void * userdata )
-			wifiAddressHandler((Wifi_MainStruct *)(uint32)cmd2, 0);
-		}
-		break;
-		
-		
+		#ifdef ARM7		
 		case SNEMULDS_APUCMD_RESET: //case 0x00000001:
 		{
 			// Reset
 			StopSound();
-
 			memset(playBuffer, 0, MIXBUFSIZE * 8);
-
 			*APU_ADDR_CNT = 0; 
 			ApuReset();
 			DspReset();
-
 			SetupSound();
 			paused = false;
 			SPC_disable = false;
@@ -139,8 +99,7 @@ void HandleFifoNotEmptyWeakRef(uint32 cmd1,uint32 cmd2,uint32 cmd3,uint32 cmd4){
 			SPC_freedom = true;
 			SPC_disable = false;
 		}
-		break;
-			
+		break;			
 		case SNEMULDS_APUCMD_SPCDISABLE:{ //case 0x00000004:{ // DISABLE 
 			SPC_disable = true;
 			*APU_ADDR_CNT = 0;
@@ -151,37 +110,16 @@ void HandleFifoNotEmptyWeakRef(uint32 cmd1,uint32 cmd2,uint32 cmd3,uint32 cmd4){
 			memset(playBuffer, 0, MIXBUFSIZE * 8);
 		}
 		break;
-
 		case SNEMULDS_APUCMD_SAVESPC:{ //case 0x00000006:{ // SAVE state 
 			SaveSpc(APU_RAM_ADDRESS);
 		}
-		break;  
-			
+		break;
 		case SNEMULDS_APUCMD_LOADSPC:{ //case 0x00000007:{ // LOAD state 
 			LoadSpc(APU_RAM_ADDRESS);
 			*APU_ADDR_CNT = 0; 
 		}
 		break;
-		
-		
 		#endif
-		
-		
-		
-		//ARM9 command handler
-		#ifdef ARM9
-		//exception handler: arm7
-		case(EXCEPTION_ARM7):{
-			
-			if((uint32)cmd2 == (uint32)unexpectedsysexit_7){
-				exception_handler((uint32)unexpectedsysexit_7);	//r0 = EXCEPTION_ARM7 / r1 = unexpectedsysexit_7
-			}
-		}
-		break;
-		
-		
-		#endif
-	
 		
 	}
 	

@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #ifndef __frontend_h_
 #define __frontend_h_
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
 #include "dsregs_asm.h"
 

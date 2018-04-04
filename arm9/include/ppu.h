@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #ifdef ARM9
 
 #include "dsregs.h"
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "gfx.h"
 
 //Map base for each VRAM allocated region

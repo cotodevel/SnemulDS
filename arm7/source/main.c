@@ -8,8 +8,9 @@
 
 #include "specific_shared.h"
 #include "wifi_arm7.h"
-#include "usrsettings.h"
-#include "timer.h"
+#include "usrsettingsTGDS.h"
+#include "timerTGDS.h"
+#include "powerTGDS.h"
 
 // Play buffer, left buffer is first MIXBUFSIZE * 2 uint16's, right buffer is next
 uint16 *playBuffer;
@@ -113,11 +114,8 @@ void SaveSpc(uint8 *spc) {
 int main(int _argc, sint8 **_argv) {
 //---------------------------------------------------------------------------------
 	IRQInit();
-	
-	// Block execution until we get control of vram D
 	while (!(*((vuint8*)0x04000240) & 0x2));
-	
-	installWifiFIFO();
+	installWifiFIFO();		//use DSWIFI
 	
     playBuffer = (uint16*)0x6000000;
     int i   = 0;

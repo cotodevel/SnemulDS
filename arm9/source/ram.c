@@ -10,7 +10,7 @@
 #include "ram_m3.h"
 
 #include <stdio.h>
-#include "bus.h"
+#include "busTGDS.h"
 
 //SuperCard
 static vuint16 *_sc_unlock(){

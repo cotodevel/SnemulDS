@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #ifndef __crc32_h__
 #define __crc32_h__
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
 #include "dsregs_asm.h"
 

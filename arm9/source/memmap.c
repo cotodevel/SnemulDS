@@ -21,14 +21,14 @@
 #include "opcodes.h"
 #include "common.h"
 #include "dsregs.h"
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "cfg.h"
 #include "core.h"
 #include "specific_shared.h"
-#include "console.h"
+#include "consoleTGDS.h"
 #include "fs.h"
-#include "dma.h"
-#include "bios.h"
+#include "dmaTGDS.h"
+#include "biosTGDS.h"
 #include "nds_cp15_misc.h"
 
 

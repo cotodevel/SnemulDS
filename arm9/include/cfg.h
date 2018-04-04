@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #ifndef __cfg_h__
 #define __cfg_h__
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 
 struct s_cfg
 {

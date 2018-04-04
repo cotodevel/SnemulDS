@@ -22,8 +22,8 @@ USA
 #define __api_wrapper_h__
 
 #include "dsregs.h"
-#include "typedefs.h"
-#include "console.h"
+#include "typedefsTGDS.h"
+#include "consoleTGDS.h"
 #include "api_wrapper.h"
 #include "apu_jukebox.h"
 #include "gui_console_connector.h"

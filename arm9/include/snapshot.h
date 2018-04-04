@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #ifndef __snapshot_h__
 #define __snapshot_h__
 
-#include "gui.h"
+#include "guiTGDS.h"
 
 typedef struct {
 	sint8 name[16];

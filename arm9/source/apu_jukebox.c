@@ -15,10 +15,10 @@
 #include "fs.h"
 #include "memmap.h"
 #include "crc32.h"
-#include "gui.h"
+#include "guiTGDS.h"
 #include "common.h"
 #include "specific_shared.h"
-#include "toolchain_utils.h"
+#include "utilsTGDS.h"
 
 int selectSong(sint8 *name)
 {

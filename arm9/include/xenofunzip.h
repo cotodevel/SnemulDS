@@ -1,7 +1,7 @@
 #ifndef __xenofunzip_h__
 #define __xenofunzip_h__
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
 
 #include <sys/reent.h>
@@ -20,7 +20,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-#include "fsfat_layer.h"
+#include "fsfatlayerTGDS.h"
 
 #define min(a,b) ((a)<(b)?(a):(b))
 #define err(e) {clrscr();printf("%s",(char*)e);while(1);}

@@ -49,34 +49,34 @@ GNU General Public License for more details.
 #include "common.h"
 #include "specific_shared.h"
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
-#include "console.h"
+#include "consoleTGDS.h"
 #include "core.h"
 #include "opcodes.h"
 #include "snapshot.h"
 #include "ppu.h"
 
-#include "gui.h"
+#include "guiTGDS.h"
 #include "fs.h"
 #include "common.h"
 
 #include "gfx.h"
 #include "cfg.h"
 #include "apu.h"
-#include "bios.h"
+#include "biosTGDS.h"
 
 #include "conf.h"
 #include "gui_widgets.h"
 #include "console_str.h"
 #include "InterruptsARMCores_h.h"
 #include "about.h"
-#include "dma.h"
+#include "dmaTGDS.h"
 
-#include "posix_hook_shared.h"
-#include "fsfat_layer.h"
-#include "keypad.h"
-#include "video.h"
+#include "posixHandleTGDS.h"
+#include "fsfatlayerTGDS.h"
+#include "keypadTGDS.h"
+#include "videoTGDS.h"
 
 
 

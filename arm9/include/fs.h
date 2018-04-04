@@ -18,7 +18,7 @@ GNU General Public License for more details.
 #ifndef FS_H_
 #define FS_H_
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
 
 #include <sys/reent.h>
@@ -53,8 +53,7 @@ extern int		FS_chdir(const sint8 *path);
 extern sint8	**FS_getDirectoryList(sint8 *path, sint8 *mask, int *cnt);
 extern sint8 	*FS_getFileName(sint8 *filename);
 
-extern int load_gz(char *fname, char *newtempfname);
-extern char * tmpFile;
+extern char tmpFile[512];
 extern bool zipFileLoaded;	//zip / gz support
 #ifdef __cplusplus
 }

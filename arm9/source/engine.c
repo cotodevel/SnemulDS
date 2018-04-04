@@ -35,14 +35,14 @@ GNU General Public License for more details.
 #include "fs.h"
 #include "memmap.h"
 #include "crc32.h"
-#include "gui.h"
+#include "guiTGDS.h"
 #include "opcodes.h"
 #include "common.h"
 #include "specific_shared.h"
 #include "nds_cp15_misc.h"
-#include "fsfat_layer.h"
+#include "fsfatlayerTGDS.h"
 #include "about.h"
-#include "toolchain_utils.h"
+#include "utilsTGDS.h"
 
 void writeSRAM(int offset, uint8* src, int size) {
         EXMEMCNT &= ~0x0880;

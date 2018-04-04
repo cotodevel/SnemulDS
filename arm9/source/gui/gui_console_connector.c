@@ -102,7 +102,7 @@ vramSetup * SNEMULDS_2DVRAM_SETUP(){
 	vramSetupDefault->vramBankSetupInst[VRAM_E_INDEX].enabled = true;
 	
 	//vramSetBankF(VRAM_F_MAIN_SPRITE);
-	vramSetupDefault->vramBankSetupInst[VRAM_F_INDEX].vrambankCR = VRAM_F_0x064XXXXX_ENGINE_A_BG;
+	vramSetupDefault->vramBankSetupInst[VRAM_F_INDEX].vrambankCR = VRAM_F_0x06410000_ENGINE_A_BG;
 	vramSetupDefault->vramBankSetupInst[VRAM_F_INDEX].enabled = true;
 	
 	//vramSetBankG(VRAM_G_BG_EXT_PALETTE);

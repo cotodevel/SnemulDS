@@ -42,22 +42,20 @@ GNU General Public License for more details.
 #include "fs.h"
 #include "memmap.h"
 #include "crc32.h"
-#include "gui.h"
+#include "guiTGDS.h"
 #include "apu_jukebox.h"
 #include "specific_shared.h"
 
 //#include "superfx.h"
 //#include "sfxinst.h"
 
-#include "dma.h"
-#include "bios.h"
-#include "console.h"
+#include "dmaTGDS.h"
+#include "biosTGDS.h"
+#include "consoleTGDS.h"
 
 //wnifilib: multiplayer
-#include "http_utils.h"
-#include "client_http_handler.h"
-#include "nifi.h"
-#include "multi.h"
+#include "dswnifi_lib.h"
+#include "dswnifi.h"
 
 #include "apu_shared.h"
 
@@ -460,8 +458,7 @@ void	W420C(uint32 addr, uint32 value)
 //JOY1
 uint32	R4016(uint32 addr)
 {
-
-	if (SNES.JOY_PORT16&1)
+if (SNES.JOY_PORT16&1)
 	{
 		SNES.mouse_speed++;
 		if (SNES.mouse_speed == 3)
@@ -1819,8 +1816,8 @@ void read_scope()
 
 void	update_joypads()
 {
-	//Coto: new single/multiplayer code
-	do_multi();
+	//Coto: new single player code
+	do_multi(NULL);
 }
 
 void SNES_update()

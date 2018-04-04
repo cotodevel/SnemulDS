@@ -1,5 +1,5 @@
 #include <unistd.h>
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 
 #ifdef __cplusplus
 extern "C" {

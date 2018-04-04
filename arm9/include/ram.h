@@ -11,7 +11,7 @@
 #ifndef __RAM
 #define __RAM
 
-#include "typedefs.h"
+#include "typedefsTGDS.h"
 #include "dsregs.h"
 
 
