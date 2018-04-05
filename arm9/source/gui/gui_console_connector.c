@@ -106,7 +106,7 @@ vramSetup * SNEMULDS_2DVRAM_SETUP(){
 	vramSetupDefault->vramBankSetupInst[VRAM_F_INDEX].enabled = true;
 	
 	//vramSetBankG(VRAM_G_BG_EXT_PALETTE);
-	vramSetupDefault->vramBankSetupInst[VRAM_G_INDEX].vrambankCR = VRAM_G_SLOT_ENGINE_A_BG_EXTENDED;
+	vramSetupDefault->vramBankSetupInst[VRAM_G_INDEX].vrambankCR = VRAM_G_SLOT01_ENGINE_A_BG_EXTENDED;
 	vramSetupDefault->vramBankSetupInst[VRAM_G_INDEX].enabled = true;
 	
 	// 48ko For CPU 
