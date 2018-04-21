@@ -34,7 +34,7 @@ GNU General Public License for more details.
 #include "engine.h"
 
 #include "posixHandleTGDS.h"
-#include "fsfatlayerTGDS.h"
+#include "fsfatlayerTGDSLegacy.h"
 #include "utilsTGDS.h"
 
 

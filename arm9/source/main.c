@@ -62,7 +62,7 @@
 #include "dswnifi.h"
 
 #include "devoptab_devices.h"
-#include "fsfatlayerTGDS.h"
+#include "fsfatlayerTGDSLegacy.h"
 #include "usrsettingsTGDS.h"
 
 #include "videoTGDS.h"
@@ -119,6 +119,76 @@ int main(int _argc, sint8 **_argv) {
 	{
 		printf(_STR(IDS_FS_FAILED));
 	}
+	
+	/*
+	//posix test case must succeed: status OK
+	clrscr();
+	int SIZE = 1;
+	int NUMELEM = 5;
+	FILE* fd = NULL;
+    sint8 * buff = malloc(ROM_STATIC_SIZE);
+    fd = fopen(getfatfsPath("test.txt"),"r+");
+	if(NULL == fd)
+    {
+        printf("fopen()(fd) Error!!!. Create :%s",getfatfsPath("test.txt"));
+		while(1);
+    }
+    printf("File(fd) opened successfully through fopen()");
+	
+	FILE * fd2 = fopen(getfatfsPath("tst.txt"),"w+");
+	if(NULL == fd2)
+    {
+        printf("fopen() Error!!!. Create :%s",getfatfsPath("tst.txt"));
+		while(1);
+    }
+	
+	
+	printf("File2(fd2) opened successfully through fopen()");
+	
+    if(SIZE*NUMELEM != fread(buff,SIZE,NUMELEM,fd))
+    {
+        printf("fread() failed");
+		while(1);
+	}
+    printf("Some bytes successfully read through fread()");
+    printf("The bytes read are [%s] ",buff);
+    if(0 != fseek(fd,11,SEEK_CUR))
+    {
+        printf(" fseek()(fd) failed ");
+		while(1);
+	}
+    printf(" fseek()(fd) successful");
+	
+	
+	int ret3 = fwrite(buff,SIZE,strlen(buff),fd);
+    if(strlen(buff) != ret3)
+    {
+        printf(" fwrite()(fd) failed:%x",ret3);
+		while(1);
+	}
+    
+	
+	
+	int ret4 = fwrite(buff,SIZE,strlen(buff),fd2);
+    if(strlen(buff) != ret4)
+    {
+        printf(" fwrite()(fd2) failed:%x",ret4);
+		while(1);
+	}
+    
+	printf("filehandlesindex:%d:%d",fileno(fd),fileno(fd2));
+	
+	printf(" fwrite() successful (fd), data written to text file");
+	fclose(fd);
+    
+	printf(" fwrite() successful (fd2), data written to text file");
+    fclose(fd2);
+    
+	printf("File stream closed through fclose() (fd2)");
+	printf("File stream closed through fclose() (fd)");
+	
+	while(1);
+	*/
 	
 	// Load SNEMUL.CFG: 0:/snemul.cfg
 	set_config_file(getfatfsPath("snemul.cfg"));
