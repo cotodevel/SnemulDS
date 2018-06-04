@@ -1,3 +1,7 @@
+06/04/2018:
+Micro$oft has acquired github, you can find updates from this software at: https://coto88.bitbucket.io/
+Have a good day.
+
 # SnemulDS
 SnemulDS 0.6b Original Sources (because codebase it´s not either 0.5 or 0.6a from snemuldsx source codes)... 
 This is based from real 0.6.a sources archeide left years ago and I managed to find.
